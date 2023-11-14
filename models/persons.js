@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const process = require('process');
 
 const url = process.env.MONGODB_URI;
 
@@ -7,6 +8,7 @@ console.log('connecting', url);
 mongoose
   .connect(url)
   .then((result) => {
+    console.log(result);
     console.log(`connected to mongodb`);
   })
   .catch((err) => {

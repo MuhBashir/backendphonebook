@@ -4,6 +4,7 @@ const app = express();
 const morgan = require('morgan');
 const cors = require('cors');
 const Person = require('./models/persons');
+const process = require('process');
 
 // Do not save your password to GITHUB
 
@@ -77,6 +78,7 @@ app.delete('/api/persons/:id', (req, res, next) => {
   const id = req.params.id;
   Person.findByIdAndDelete(id)
     .then((person) => {
+      console.log(person);
       res.status(204).end();
     })
     .catch((error) => next(error));
@@ -98,7 +100,6 @@ app.put('/api/persons/:id', (req, res, next) => {
 });
 
 const errorHandler = (error, req, res, next) => {
-  const body = req.body;
   if (error.name === 'CastError') {
     return res.status(400).send({ error: 'malformmatted id' });
   } else if (error.name === 'ValidationError') {
